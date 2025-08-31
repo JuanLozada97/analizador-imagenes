@@ -32,58 +32,37 @@ async function analyzeWithOpenAI(buffer, mimeType, signal) {
 
   const openai = new OpenAI({ apiKey });
 
-  // Convertimos a base64 para el input_image binario
+  // Convertimos imagen a base64 en formato data URL
   const b64 = buffer.toString("base64");
+  const dataUrl = `data:${mimeType};base64,${b64}`;
 
-  const system = "Eres un asistente que etiqueta imágenes de manera breve y precisa.";
-  const user = [
+  const response = await openai.responses.create(
     {
-      type: "input_text",
-      text:
-        "Devuelve SOLO un JSON con el formato {\"tags\":[{\"label\":\"string\",\"confidence\":number}]}. " +
-        "Incluye de 3 a 10 etiquetas relevantes. confidence entre 0 y 1. Sin texto adicional.",
+      model: "gpt-4.1-mini", // o gpt-4o-mini si prefieres
+      input: [
+        {
+          role: "user",
+          content: [
+            { type: "input_text", text: "Devuelve SOLO un JSON {\"tags\":[{\"label\":\"string\",\"confidence\":number}]}, con 3-10 etiquetas relevantes." },
+            { type: "input_image", image_url: dataUrl }
+          ]
+        }
+      ],
     },
-    {
-      type: "input_image",
-      image_data: { data: b64, mime_type: mimeType || "image/png" },
-    },
-  ];
+    { signal }
+  );
 
-  // Timeout/abort controller por robustez
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25_000); // 25s
+  // El texto viene consolidado en output_text
+  let text = response.output_text || "";
+  let parsed;
   try {
-    const resp = await openai.chat.completions.create(
-      {
-        model: "gpt-4o-mini",
-        temperature: 0,
-        messages: [
-          { role: "system", content: system },
-          { role: "user", content: user },
-        ],
-      },
-      { signal: signal ?? controller.signal }
-    );
-
-    const text = resp.choices?.[0]?.message?.content?.trim() || "";
-    // Parseo defensivo del JSON
-    let parsed;
-    try {
-      parsed = JSON.parse(text);
-    } catch {
-      // Heurística: intenta extraer bloque JSON si vino con texto extra
-      const match = text.match(/\{[\s\S]*\}/);
-      parsed = match ? JSON.parse(match[0]) : { tags: [] };
-    }
-    return normalizeTags(parsed);
-  } catch (err) {
-    if (err.name === "AbortError") {
-      throw new Error("AI request timeout");
-    }
-    throw new Error(`OpenAI error: ${err.message || String(err)}`);
-  } finally {
-    clearTimeout(timeout);
+    parsed = JSON.parse(text);
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    parsed = match ? JSON.parse(match[0]) : { tags: [] };
   }
+
+  return normalizeTags(parsed);
 }
 
 /**
