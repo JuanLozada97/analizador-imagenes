@@ -147,5 +147,40 @@ Este proyecto incluye un **workflow de GitHub Actions** que utiliza **OpenAI (gp
 
 ---
 
+## 🌿 Flujo de ramas y convención de commits
+
+### Ramas
+- **Rama principal:** `main`  
+- **Ramas de features:** `feature/<área>-<descripción>`  
+  - Ejemplos:  
+    - `feature/backend-api`  
+    - `feature/frontend-uploader`  
+- **Ramas de devops/docs:** usar prefijos `devops/` y `docs/`  
+  - Ejemplos:  
+    - `devops/ai-pr-review`  
+    - `docs/add-pr-template`  
+
+### Convención de Commits
+Este proyecto usa [Conventional Commits](https://www.conventionalcommits.org/).  
+
+Formatos comunes:
+- `feat(<scope>): descripción breve` → Nueva funcionalidad  
+- `fix(<scope>): descripción breve` → Corrección de bug  
+- `chore(<scope>): descripción breve` → Cambios de configuración o tareas menores  
+- `docs(<scope>): descripción breve` → Documentación  
+- `refactor(<scope>): descripción breve` → Refactor de código sin cambio funcional  
+
+Ejemplos:
+
+- feat(backend): add /api/analyze endpoint
+- fix(frontend): handle non-image upload error
+- docs: add PR template and contributing guidelines
+
+### Relación con PRs
+- Los títulos de los Pull Requests deben seguir la misma convención que los commits.  
+- Cada PR debe enlazar al Issue correspondiente usando la sintaxis `Closes #<número>`.  
+- Se debe usar la plantilla de PR definida en `.github/pull_request_template.md`.  
+
+
 ## 📄 Licencia
 MIT
