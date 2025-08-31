@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "name": "analizador-imagenes",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ai-pr-review": "node tools/ai-pr-review.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.0",
+    "openai": "^4.58.1"
+  }
+}
