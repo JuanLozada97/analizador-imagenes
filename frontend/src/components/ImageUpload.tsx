@@ -1,6 +1,7 @@
 import React, { useState, useRef, DragEvent } from 'react';
 import { Upload, X, Image as ImageIcon, Loader2, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import TagsPills from '@/components/TagsPills';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -297,10 +298,17 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
                         
                         {analysisResult && (
                           <div className="mt-6 p-4 rounded-lg bg-muted">
-                            <h3 className="text-lg font-medium mb-2">Resultado del Análisis</h3>
-                            <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-                              {JSON.stringify(analysisResult, null, 2)}
-                            </pre>
+                            {/* Check if it's tags format */}
+                            {analysisResult.tags && Array.isArray(analysisResult.tags) ? (
+                              <TagsPills tags={analysisResult.tags} />
+                            ) : (
+                              <>
+                                <h3 className="text-lg font-medium mb-2">Resultado del Análisis</h3>
+                                <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                  {JSON.stringify(analysisResult, null, 2)}
+                                </pre>
+                              </>
+                            )}
                           </div>
                         )}
                       </div>
