@@ -57,7 +57,7 @@ VITE_API_BASE=http://localhost:4000
 
 ### Clonar y preparar
 ```bash
-git clone https://github.com/<tu-usuario>/analizador-imagenes.git
+git clone https://github.com/juanlozada97/analizador-imagenes.git
 cd analizador-imagenes
 ```
 
@@ -104,6 +104,23 @@ npm run dev
 
 ### `GET /api/health`
 - **Response**: `{ "ok": true }`
+
+---
+
+## 🖥️ Frontend
+
+1. Iniciar backend y frontend.
+2. Abrir `http://localhost:5173`.
+3. Subir imagen (JPG/PNG/GIF/WebP máx 10MB) → **Analizar**.
+4. Verás imagen + etiquetas como pills, con spinner y toasts de error.
+
+---
+
+## 🧪 Troubleshooting
+
+- **CORS**: backend debe correr en `http://localhost:4000`.
+- **OpenAI**: usar `AI_PROVIDER=mock` si no tienes API key.
+- **Windows**: usar la variante simple de `npm run dev` sin `wait-on`.
 
 ---
 
@@ -181,6 +198,17 @@ Ejemplos:
 - Cada PR debe enlazar al Issue correspondiente usando la sintaxis `Closes #<número>`.  
 - Se debe usar la plantilla de PR definida en `.github/pull_request_template.md`.  
 
+---
+
+## ✅ Checklist
+
+- [x] Instalación y ejecución en <10 min
+- [x] Variables de entorno claras
+- [x] Ejemplos de request/response documentados
+- [x] UI responsive, mobile friendly, tags como pills
+- [x] Manejo de errores en UI y API
+
+---
 
 ## 📄 Licencia
 MIT
