@@ -4,7 +4,10 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "cross-env AI_PROVIDER=mock node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "cross-env AI_PROVIDER=mock node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
+    "test:cov": "cross-env AI_PROVIDER=mock node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -14,7 +17,12 @@
     "openai": "^5.16.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@types/jest": "^30.0.0",
+    "@types/supertest": "^6.0.3",
+    "cross-env": "^10.0.0",
+    "jest": "^30.1.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   },
   "keywords": [],
   "author": "Juan Lozada",
