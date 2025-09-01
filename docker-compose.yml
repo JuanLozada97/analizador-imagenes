@@ -13,13 +13,13 @@ services:
       - ai-net
 
   frontend:
-     build:
-       context: ./frontend
-       dockerfile: Dockerfile
-       args:
-         VITE_API_BASE: http://backend:4000
-     ports:
-       - "5173:5173"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE: http://backend:4000
+    ports:
+      - "5173:5173"
 
 networks:
   ai-net:
