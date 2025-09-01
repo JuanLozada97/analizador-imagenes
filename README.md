@@ -199,6 +199,31 @@ Ejemplos:
 - Se debe usar la plantilla de PR definida en `.github/pull_request_template.md`.  
 
 ---
+## Uso con Docker
+1. **Levanta los servicios con Docker Compose:**
+
+   ```sh
+   docker-compose up --build
+   ```
+
+   Esto construirá y levantará dos contenedores:
+   - **backend**: disponible en [http://localhost:4000](http://localhost:4000)
+   - **frontend**: disponible en [http://localhost:5173](http://localhost:5173)
+
+2. **Detener los servicios:**
+
+   Presiona `Ctrl+C` en la terminal donde se está ejecutando o usa:
+
+   ```sh
+   docker-compose down
+   ```
+
+### Notas
+
+- El frontend se conecta automáticamente al backend usando la red interna de Docker.
+- Si necesitas instalar nuevas dependencias, recuerda reconstruir los contenedores (`docker-compose up --build`).
+
+---
 
 ## ✅ Checklist
 
