@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { analyzeImage } from "../services/aiProvider.js";
+import { analyzeImage } from "../services/aIProvider.js";
 
 const router = express.Router();
 
